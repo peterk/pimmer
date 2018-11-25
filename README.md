@@ -1,5 +1,8 @@
 # pimmer
-Exploratory code for PDF image mining. Baed on https://github.com/megloff1/image-mining with added PDF splitting, a simple GUI and queue management.
+Exploratory code for PDF image mining. A multi page PDF will be split and converted to jpeg files that are mined for illustrations and images. Baed on https://github.com/megloff1/image-mining with added PDF splitting, a simple GUI and queue management.
+
+![Alt text](testdata/hat_catalog_page.jpg?raw=true "Title")
+![Alt text](testdata/hat_catalog_result.jpg?raw=true "Title")
 
 ## Install
 
