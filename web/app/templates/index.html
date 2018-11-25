@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+    {% include "_banner.html" %}
+    <div class="container">
+      <div class="row" role="main">
+	<div class="col-md-12">
+	  {% with messages = get_flashed_messages() %}
+	      {% if messages %}
+		  <div class="alert alert-danger mt-2" role="alert">
+		    {% for message in messages %}
+			{{ message }}
+		    {% endfor %}
+		  </div>
+	      {% endif %}
+	  {% endwith %}  
+	  <form class="form-submitvideo" enctype="multipart/form-data" action="{{ url_for('process') }}" method="POST">
+	    <p>PDF-file image miner</p>
+	    <label for="file" class="sr-only">PDF-file</label>
+	    <input type="file" name="file" id="file" value="{{file}}" class="form-control" placeholder="Välj fil" required autofocus>
+	    <!-- label for="email" class="sr-only">E-mail</label>
+	    <input type="email" name="email" value="{{email}}" id="email" class="form-control" placeholder="Din mailadress" required -->
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Mine it</button>
+	  </form>
+	</div>
+      </div>
+
+    </div>
+{% endblock %}

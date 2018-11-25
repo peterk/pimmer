@@ -1,0 +1,48 @@
+version: '2'
+services:
+  web:
+    build: ./web
+    hostname: web
+    volumes:
+      - ./web/app:/app
+      - ./data:/data
+    ports:
+      - "7777:7777"
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_DEBUG=${FLASK_DEBUG}
+      - FLASK_KEY=${FLASK_KEY}
+      - PYTHONUNBUFFERED=1
+      - 'RUN=flask run --host=0.0.0.0 --port=7777'
+      - RABBITMQ_DEFAULT_USER=${RMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
+    command: flask run --host=0.0.0.0 --port=7777
+    depends_on:
+      - "mq"
+    restart: always
+  mq:
+    image: rabbitmq:3.7.6-alpine
+    hostname: mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
+    volumes:
+        - ./queue:/q
+    ports:
+      - "15672"
+      - "5672"
+    restart: always
+  worker:
+    build: ./worker
+    hostname: worker
+    volumes:
+      - ./data:/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ERROR_EMAIL=${ERROR_EMAIL}
+      - RABBITMQ_DEFAULT_USER=${RMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
+    depends_on:
+      - "mq"
+    restart: always
+    shm_size: 1G
