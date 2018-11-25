@@ -39,7 +39,6 @@ services:
       - ./data:/data
     environment:
       - PYTHONUNBUFFERED=1
-      - ERROR_EMAIL=${ERROR_EMAIL}
       - RABBITMQ_DEFAULT_USER=${RMQ_USER}
       - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
     depends_on:

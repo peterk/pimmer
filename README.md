@@ -11,7 +11,7 @@ Exploratory code for PDF image mining. A multi page PDF will be split and conver
 
 The service is now running on http://0.0.0.0:7777.
 
-If you are planning on processing a large number of documents you can start multiple workers with `docker-compose --scale worker=5`.
+If you are planning on processing a large number of documents you can start more workers with `docker-compose up -d --scale worker=5`.
 
 Please report bugs and feedback in the Github issue tracker.
 
