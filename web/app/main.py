@@ -49,8 +49,6 @@ def about():
 @app.route("/process/", methods=['POST'])
 def process():
 
-    email = request.form.get("email", None)
-
     # check if the post request has the file part
     if 'file' not in request.files:
         flash('No file uploaded')
@@ -66,7 +64,7 @@ def process():
 
         # make job folder
         m = hashlib.md5()
-        m.update(filename.encode("utf-8") + email.encode("utf-8") + datetime.now().isoformat().encode("utf-8"))
+        m.update(filename.encode("utf-8") + datetime.now().isoformat().encode("utf-8"))
         md5string=m.hexdigest()
         target_folder = os.path.join(UPLOAD_FOLDER, md5string)
         os.mkdir(target_folder)
@@ -75,7 +73,6 @@ def process():
 
         # make queue message
         jd = dict()
-        jd["email"] = email
         jd["jobid"] = md5string
         jd["filename"] = filename
         message = json.dumps(jd)
@@ -93,7 +90,7 @@ def process():
             
     else:
         flash('Upload a PDF file containing images')
-        return render_template('index.html', email=email)
+        return render_template('index.html')
 
 
 if __name__ == "__main__":

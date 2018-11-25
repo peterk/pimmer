@@ -5,14 +5,7 @@ import json
 import shutil
 import re
 import sys
-import smtplib
-from email.mime.image import MIMEImage
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 from os.path import basename
-from email.mime.application import MIMEApplication
-from email.utils import COMMASPACE, formatdate
-from mailjet_rest import Client
 import logging
 import traceback
 import pika
@@ -87,7 +80,6 @@ def handle_job(message):
         jdata = json.loads(message)
         jobid = jdata["jobid"]
         filename = jdata["filename"]
-        email = jdata["email"] 
 
         logging.info(f"Splitting PDF {jobid}/{filename}")
         
