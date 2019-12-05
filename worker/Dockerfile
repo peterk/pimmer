@@ -1,6 +1,6 @@
 #FROM python:3.6-alpine
 #FROM nuveo/opencv:alpine-python3-opencv3
-FROM julianbei/alpine-opencv-microimage:latest
+FROM julianbei/alpine-opencv-microimage:p3-3.1
 RUN apk add --no-cache git ghostscript-dev
 RUN pip install --upgrade pip
 COPY ./requirements.txt ./requirements.txt
