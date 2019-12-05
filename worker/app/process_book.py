@@ -19,7 +19,7 @@ RESULT_FOLDER = "/data/result"
 def cleanup(jobid):
     """Remove intermediate files.
     """
-    pass
+    shutil.rmtree(os.path.join(UPLOAD_FOLDER, jobid))
 
 
 def pdf_to_images(filepath, output_folder):

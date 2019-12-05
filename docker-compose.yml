@@ -19,7 +19,7 @@ services:
     command: flask run --host=0.0.0.0 --port=7777
     depends_on:
       - "mq"
-    restart: always
+    restart: unless-stopped
   mq:
     image: rabbitmq:3.7.6-alpine
     hostname: mq
@@ -31,7 +31,7 @@ services:
     ports:
       - "15672"
       - "5672"
-    restart: always
+    restart: unless-stopped
   worker:
     build: ./worker
     hostname: worker
@@ -43,5 +43,5 @@ services:
       - RABBITMQ_DEFAULT_PASS=${RMQ_PASSWORD}
     depends_on:
       - "mq"
-    restart: always
+    restart: unless-stopped
     shm_size: 1G
