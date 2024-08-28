@@ -1,16 +1,17 @@
-import time
-import os
 import glob
 import json
-import shutil
-import re
-import sys
-from os.path import basename
-import logging
-import traceback
-import pika
-import ghostscript
 import locale
+import logging
+import os
+import re
+import shutil
+import sys
+import time
+import traceback
+from os.path import basename
+
+import ghostscript
+import pika
 
 UPLOAD_FOLDER = '/data/jobs'
 RESULT_FOLDER = "/data/result"
@@ -119,10 +120,10 @@ if __name__ == "__main__":
     logging.info("Starting worker...")
     logging.info(f"Creds {os.environ['RABBITMQ_DEFAULT_USER']}")
     credentials = pika.PlainCredentials(os.environ['RABBITMQ_DEFAULT_USER'], os.environ["RABBITMQ_DEFAULT_PASS"])
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='mq', port=5672, heartbeat_interval=600, blocked_connection_timeout=300, virtual_host='/', credentials=credentials, connection_attempts=20, retry_delay=4))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='mq', port=5672, heartbeat=600, blocked_connection_timeout=300, virtual_host='/', credentials=credentials, connection_attempts=20, retry_delay=4))
     channel = connection.channel()
     channel.queue_declare(queue='pimmer', durable=True)
     channel.basic_qos(prefetch_count=1)
-    channel.basic_consume(callback, queue='pimmer')
+    channel.basic_consume(queue='pimmer', on_message_callback=callback)
     logging.info("Started consuming queue...")
     channel.start_consuming()

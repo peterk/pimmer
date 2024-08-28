@@ -9,7 +9,7 @@ Exploratory code for PDF image mining. A multi page PDF will be split and conver
 3. Make sure you have a folder called `data` in the project root folder (jobs and resulting image files will end up here). You can map output to a different local folder for the worker in `docker-compose.yml`.
 4. Run `docker-compose up -d`. Wait a minute until the queue and worker is up.
 
-The service is now running on http://0.0.0.0:7777.
+The service is now running on http://localhost:7777.
 
 If you are planning on processing a large number of documents you can start more workers with `docker-compose up -d --scale worker=5` and then post files with curl to the `/process/` endpoint:
 

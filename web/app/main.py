@@ -1,14 +1,25 @@
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+import glob
 import hashlib
-from hashlib import md5
 import json
+import logging
 import os
 import urllib
-import glob
-import logging 
-import pika
-from werkzeug.utils import secure_filename
 from datetime import datetime
+from hashlib import md5
+
+import pika
+from flask import (
+    Flask,
+    abort,
+    flash,
+    g,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for,
+)
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.environ["FLASK_KEY"]
@@ -79,7 +90,7 @@ def process():
         app.logger.info(f"Job data: {message}")
 
         # Add to queue
-        connection = pika.BlockingConnection(pika.ConnectionParameters('mq', 5672, '/', credentials, heartbeat_interval=600, blocked_connection_timeout=300))
+        connection = pika.BlockingConnection(pika.ConnectionParameters('mq', 5672, '/', credentials, heartbeat=600, blocked_connection_timeout=300))
         channel = connection.channel()
         channel.queue_declare(queue='pimmer', durable=True)
         channel.basic_publish(exchange='', routing_key='pimmer', body=message, properties=pika.BasicProperties(delivery_mode = 2,))
