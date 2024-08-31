@@ -17,9 +17,14 @@ If you are planning on processing a large number of documents you can start more
 
 Please report bugs and feedback in the Github issue tracker.
 
-## Example result
+## Results
+
+The detected images will end up as individual image files in job folders in the ./data/results. 
+
+The job folder will also contain a json file per page with the coordinates of the detected images.
+
 A digitized hat catalog like this:
 ![Hat catalog page](testdata/hat_catalog_page.jpg?raw=true "Hat catalog page")
 
-... can result in all the individual hat images:
+... results in all the individual hat images:
 ![Individual hat images](testdata/hat_catalog_result.jpg?raw=true "Detected hat images")
